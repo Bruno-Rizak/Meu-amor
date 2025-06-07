@@ -1,0 +1,156 @@
+/* ESTILOS PADRÃO (MOBILE FIRST = COM ROLAGEM) */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #1c1c1c;
+    color: #ffffff;
+}
+
+.secao-hero {
+    min-height: 100vh;
+    height: auto;      
+    position: relative;
+    display: flex;
+    z-index: 0; 
+}
+
+#meuCarrossel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: #000;
+}
+
+#meuCarrossel .carousel-item img {
+    width: 100%;
+    height: 100%; 
+    object-fit: contain !important;
+}
+
+#meuCarrossel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+}
+
+.conteudo-sobreposto {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    padding: 30px 10px;
+    box-sizing: border-box;
+    gap: 30px;
+}
+
+.spotify-player {
+    width: 90%;
+    max-width: 350px;
+}
+
+.container-contadores {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.contador-individual {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 12px;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    text-align: center;
+    width: 95%;
+    max-width: 450px;
+}
+
+.contador-titulo {
+    width: 100%;
+    margin: 0 0 5px 0;
+    font-weight: bold;
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.contador-individual div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8rem;
+    flex-basis: 28%;
+}
+
+.contador-individual span {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.secao-conteudo {
+    display: block;
+    padding: 60px 20px;
+    position: relative;
+    background-color: #1c1c1c;
+}
+.secao-conteudo .container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+.secao-conteudo h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+.secao-conteudo p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* ======================================================= */
+/* REGRAS PARA MELHORAR O VISUAL NO DESKTOP                */
+/* ======================================================= */
+@media (min-width: 992px) {
+    /* ================================================== */
+    /* ===== AJUSTE FINAL DE CENTRALIZAÇÃO PARA DESKTOP === */
+    /* ================================================== */
+    .conteudo-sobreposto {
+        min-height: auto;
+        height: 100%;
+        justify-content: center; /* Altera para 'center' para centralizar o bloco todo */
+        padding: 20px 10px;
+        gap: 40px; /* Adiciona um espaço entre o player e os contadores */
+    }
+    .spotify-player{
+        margin-top: 0; /* Remove margens para um centrado mais preciso */
+    }
+    .container-contadores {
+        flex-direction: row; 
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 0; /* Remove margens para um centrado mais preciso */
+    }
+    .contador-individual {
+        flex: 1;
+        min-width: 300px;
+    }
+    .contador-titulo { font-size: 1rem; }
+    .contador-individual div { font-size: 0.9rem; flex-basis: auto; }
+    .contador-individual span { font-size: 2rem; }
+}
