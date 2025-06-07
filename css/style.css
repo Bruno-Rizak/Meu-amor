@@ -8,20 +8,20 @@ body {
 }
 
 .secao-hero {
-    min-height: 100vh;
-    height: auto;      
-    position: relative;
+    /* Usamos flexbox para poder reordenar os elementos */
     display: flex;
-    z-index: 0; 
+    flex-direction: column;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 #meuCarrossel {
-    position: absolute;
-    top: 0;
-    left: 0;
+    /* No mobile, o carrossel não é mais absoluto */
+    position: relative; 
     width: 100%;
-    height: 100%;
-    z-index: 1;
+    /* Ordem 2: aparecerá no meio */
+    order: 2;
+    height: 60vh; /* Altura definida para o carrossel */
     background-color: #000;
 }
 
@@ -38,45 +38,38 @@ body {
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.75); /* O fundo ficará um pouco mais escuro */
+    background-color: rgba(0, 0, 0, 0.75);
     z-index: 2;
 }
 
+/* O container geral dos conteúdos sobrepostos */
 .conteudo-sobreposto {
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; 
-    align-items: center;
-    padding: 30px 10px;
-    box-sizing: border-box;
-    gap: 30px;
+    /* Mágica: faz este container "desaparecer" e promove seus filhos a itens flex */
+    display: contents;
 }
 
 .spotify-player {
+    /* Ordem 1: aparecerá primeiro */
+    order: 1;
     width: 90%;
     max-width: 350px;
+    margin: 30px auto 30px auto; /* Espaçamento vertical e centralização */
 }
 
-/* NOTA: O conteúdo interno de um iframe (como o player do Spotify) não pode 
-ter seu fundo alterado por CSS externo por razões de segurança do navegador.
-A aparência do player é controlada pelo próprio Spotify. 
-A regra abaixo garante que não haja bordas adicionadas pelo nosso site.
-*/
 .spotify-player iframe {
     border: none;
 }
 
-
 .container-contadores {
+    /* Ordem 3: aparecerá por último */
+    order: 3;
     display: flex;
     flex-direction: column; 
     align-items: center;
     gap: 15px;
     width: 100%;
+    padding: 30px 10px 30px 10px;
+    box-sizing: border-box;
 }
 
 .contador-individual {
@@ -134,34 +127,64 @@ A regra abaixo garante que não haja bordas adicionadas pelo nosso site.
 }
 
 /* ======================================================= */
-/* REGRAS PARA MELHORAR O VISUAL NO DESKTOP                */
+/* REGRAS PARA RESTAURAR O VISUAL NO DESKTOP               */
 /* ======================================================= */
 @media (min-width: 992px) {
-    /* ================================================== */
-    /* ===== AJUSTE FINAL DE CENTRALIZAÇÃO PARA DESKTOP === */
-    /* ================================================== */
-    .conteudo-sobreposto {
-        min-height: auto;
+   .secao-hero {
+    /* Hero volta a ser um bloco de referência */
+    display: block;
+    position: relative;
+    /* ADICIONADO: Define a altura e esconde o que transbordar */
+    height: 100vh;
+    overflow: hidden;
+}
+
+    #meuCarrossel {
+        /* Carrossel volta a ser o fundo absoluto */
+        position: absolute;
+        top: 0;
+        left: 0;
         height: 100%;
-        justify-content: center; /* Altera para 'center' para centralizar o bloco todo */
+        width: 100%;
+        order: 0; /* Reseta a ordem */
+        z-index: 1;
+    }
+
+    .conteudo-sobreposto {
+        /* O container volta a existir e a ser o container flex para o conteúdo */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        min-height: 100vh;
         padding: 20px 10px;
-        gap: 20px; /* Reduz o espaço principal para controlar pelo margin */
+        gap: 20px;
     }
+
     .spotify-player{
-        margin-top: 0; /* Remove margens para um centrado mais preciso */
+        order: 0; /* Reseta a ordem */
+        margin: 0; /* Reseta a margem */
     }
+
     .container-contadores {
+        order: 0; /* Reseta a ordem */
         flex-direction: row; 
         align-items: flex-start;
-        justify-content: center; /* Adicionado para centralizar os contadores */
+        justify-content: center;
         gap: 20px;
-        width: 100%; /* Garante que o container ocupe a largura para a centralização */
-        margin-top: 60px; /* Adicionado para empurrar os contadores para baixo */
+        width: 100%;
+        padding: 0;
+        margin-top: 60px;
     }
+
     .contador-individual {
         flex: 1;
         min-width: 300px;
     }
+    
     .contador-titulo { font-size: 1rem; }
     .contador-individual div { font-size: 0.9rem; flex-basis: auto; }
     .contador-individual span { font-size: 2rem; }
